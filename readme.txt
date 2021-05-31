@@ -7,7 +7,8 @@ This new version of BEN calculation code can directly read .nii or .nii.gz file.
 # -m brainmask. Brain mask used for removing background voxels. This mask should have the same spatial size as that of the rsfMRI data.
 # -i input image
 # -o output file. The filename will be patched to record some parameters.
-# For running the code in windows, change "ben" below to be "benwin.exe".
+# To run the code in windows, change "ben" below to be "benwin.exe".
+# To run the code in Linux, change "ben" to be "ben_linux" in the following lines.
 # Python code for calling the code
 cmdstr="ben" + " -d 3 -r 0.6 -c 30 -num_dummies 4 -m "+brainmask+ " -i  "+inputimg+" -o "+ofile
 os.system(cmdstr)
