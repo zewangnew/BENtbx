@@ -9,9 +9,16 @@ This new version of BEN calculation code can directly read .nii or .nii.gz file.
 # -o output file. The filename will be patched to record some parameters.
 # To run the code in windows, change "ben" below to be "benwin.exe".
 # To run the code in Linux, change "ben" to be "ben_linux" in the following lines.
+# 
 # Python code for calling the code
 cmdstr="ben" + " -d 3 -r 0.6 -c 30 -num_dummies 4 -m "+brainmask+ " -i  "+inputimg+" -o "+ofile
 os.system(cmdstr)
 
-# bash command line for calling the code
-ben -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename
+# bash command line for calling the code in Linux
+ben_linux -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename
+# bash command line for calling the code in Mac
+ben_linux -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename
+# command line for calling the code in windows
+benwin.exe -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename
+
+
