@@ -2,6 +2,7 @@
 A new version of the entropy calculation code of the BENtbx
 ben included here is compiled using gcc 5.4.  The Windows version was compiled with VS2012. To use the code, read the file readme.txt and follow the example provided there and in batch_calc_uBEN.m. You can still go to https://cfn.upenn.edu/zewang/BENtbx.php to download the sample data and matlab code. batch_calc_uBEN.m will read the code in par.m to find the data.
 If you meet any problem (especially for Mac machine), please let me know.
+I have provided a docker for calculating BEN. You can also provide an ev file to specify which timepoints should be included. This option is helpful for task fMRI if you want to calculate BEN for a specific condition only.
 
 The following is copied from readme.txt.
 
@@ -25,3 +26,36 @@ ben_linux -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii
 ben_linux -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename
 # command line for calling the code in windows
 benwin.exe -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename
+
+## instructions for using docker to run entropy calculation:
+# Instructions for running BENtbx using docker
+Assuming data is saved in /home/yourname/workshop; data file is called sub_002_task.nii.gz. Using the following parameters: embedding window length w=3, cutoff threshold
+r=0.6 and output image name: bensub2.nii.gz, you can type the following command in linux or mac terminal to get the output.  Output will be saved in /home/yourname/workshop/output
+
+sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben -d 3 -r 0.6 -i /data/sub_002_task.nii.gz -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
+## -it means interactive: you will see intermediate prompt message
+## $HOME means /home/yourusername (yourusername will be automatically replaced by the real user name)
+## -v is to link a folder to one inside the container. -v $HOME/workshop:/data:ro means mounting the folder "workshop" in your
+##  home directory to the path /data inside the container. 
+##  ro means read only
+##  ben_docker is the name of the packaged container (similar to a virtual machine). :1 means the version. Currently, there is only one version. 
+##  -m /data/imgmask.nii.gz  will take the mask image saved in /data/imgmask.nii.gz to remove outside brain voxels
+
+
+
+sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben_seg -d 3 -r 0.6 -i /data/sub_002_task.nii.gz -ev fmriev.txt -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
+## -it means interactive: you will see intermediate prompt message
+## $HOME means /home/yourusername (yourusername will be automatically replaced by the real user name)
+## -v is to link a folder to one inside the container. -v $HOME/workshop:/data:ro means mounting the folder "workshop" in your
+##  home directory to the path /data inside the container. 
+##  ro means read only
+##  ben_docker is the name of the packaged container (similar to a virtual machine). :1 means the version. Currently, there is only one version. 
+##  -m /data/imgmask.nii.gz  will take the mask image saved in /data/imgmask.nii.gz to remove outside brain voxels
+##  -ev fmriev.txt  will force the program to include the timepoints recorded in the text file: fmriev.txt only.  Change fmriev.txt to your own evfile.
+##       the ev file should contain two columns: onset and duration.  For each row, onset+duration should be smaller than next onset.
+##       VERY IMPORTANT: if onsets and durations are recorded in a unit of seconds, you must provide TR in the command line, and the full command line will like:
+#sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben_seg -d 3 -r 0.6 -TR 1.2 -i /data/sub_002_task.nii.gz -ev fmriev.txt -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
+# -TR 1.2 means TR=1.2 sec.
