@@ -25,5 +25,37 @@ ben -d 3 -r 0.6 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilenam
 # ben -d 3 -4 0.6 -c 30 -num_dummies 19 -tlen_2use 10 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename.nii.gz
 
 # calculating BEN using part of the input images as specified by the ev file.
-# In the evfile, each colume will correspond to one BEN map. 1's in the columen label the timepoints to be used.
+# the ev file should contain two columns: onset and duration. For each row, onset+duration should be smaller than next onset.
+
 ben_fmri -d 3 -r 0.6 -c 30 -m brainmask.nii.gz -ev evfile -i inputimage.nii.gz -o entropyfilename.nii.gz
+# VERY IMPORTANT: if onsets and durations are recorded in a unit of seconds, you must provide TR in the command line, and the full command line will like:
+ben_fmri -d 3 -r 0.6 -c 30 -TR 2 -m brainmask.nii.gz -ev evfile -i inputimage.nii.gz -o entropyfilename.nii.gz
+
+instructions for using docker to run entropy calculation:
+Instructions for running BENtbx using docker
+Assuming data is saved in /home/yourname/workshop; data file is called sub_002_task.nii.gz. Using the following parameters: embedding window length w=3, cutoff threshold r=0.6 and output image name: bensub2.nii.gz, you can type the following command in linux or mac terminal to get the output. Output will be saved in /home/yourname/workshop/output
+
+sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben -d 3 -r 0.6 -i /data/sub_002_task.nii.gz -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
+-it means interactive: you will see intermediate prompt message
+$HOME means /home/yourusername (yourusername will be automatically replaced by the real user name)
+-v is to link a folder to one inside the container. -v $HOME/workshop:/data:ro means mounting the folder "workshop" in your
+home directory to the path /data inside the container.
+ro means read only
+ben_docker is the name of the packaged container (similar to a virtual machine). :1 means the version. Currently, there is only one version.
+-m /data/imgmask.nii.gz will take the mask image saved in /data/imgmask.nii.gz to remove outside brain voxels
+sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben_seg -d 3 -r 0.6 -i /data/sub_002_task.nii.gz -ev fmriev.txt -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
+-it means interactive: you will see intermediate prompt message
+$HOME means /home/yourusername (yourusername will be automatically replaced by the real user name)
+-v is to link a folder to one inside the container. -v $HOME/workshop:/data:ro means mounting the folder "workshop" in your
+home directory to the path /data inside the container.
+ro means read only
+ben_docker is the name of the packaged container (similar to a virtual machine). :1 means the version. Currently, there is only one version.
+-m /data/imgmask.nii.gz will take the mask image saved in /data/imgmask.nii.gz to remove outside brain voxels
+-ev fmriev.txt will force the program to include the timepoints recorded in the text file: fmriev.txt only. Change fmriev.txt to your own evfile.
+the ev file should contain two columns: onset and duration. For each row, onset+duration should be smaller than next onset.
+VERY IMPORTANT: if onsets and durations are recorded in a unit of seconds, you must provide TR in the command line, and the full command line will like:
+#sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben_seg -d 3 -r 0.6 -TR 1.2 -i /data/sub_002_task.nii.gz -ev fmriev.txt -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
+-TR 1.2 means TR=1.2 sec.
