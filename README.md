@@ -4,6 +4,9 @@ ben included here is compiled using gcc 5.4.  The Windows version was compiled w
 If you meet any problem (especially for Mac machine), please let me know.
 I have provided a docker for calculating BEN. You can also provide an ev file to specify which timepoints should be included. This option is helpful for task fMRI if you want to calculate BEN for a specific condition only.
 
+(In Chinese)
+BENtbx 可以在Linux, Windows, 和MacOS 下运行，请选择对应的版本。输入图像必须是nii 或者nii.gz格式，如果你需要支持cifti格式请单独联系，目前还没公开发布。如果出现“segmentation fault"错误很可能是图像有问题，可以先检查一下是否能打开该图像文件。另外输入的大脑模板(mask)必须跟输入图像的大小一致。
+
 The following is copied from readme.txt.
 
 # ofile defines the prefix of the output entropy map
@@ -12,6 +15,7 @@ The following is copied from readme.txt.
 # -num_dummies specifies how many dummy points will be removed from the beginning of the rsfMRI data
 # -m brainmask. Brain mask used for removing background voxels. This mask should have the same spatial size as that of the rsfMRI data.
 # -i input image
+# -c number of CPU cores to be used.
 # -o output file. The filename will be patched to record some parameters.
 # To run the code in windows, change "ben" below to be "benwin.exe".
 # To run the code in Linux, change "ben" to be "ben_linux" in the following lines.
@@ -59,3 +63,5 @@ sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/ou
 #sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben_seg -d 3 -r 0.6 -TR 1.2 -i /data/sub_002_task.nii.gz -ev fmriev.txt -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
 
 # -TR 1.2 means TR=1.2 sec.
+
+
