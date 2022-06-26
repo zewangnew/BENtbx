@@ -2,10 +2,10 @@
 A new version of the entropy calculation code of the BENtbx
 ben included here is compiled using gcc 5.4.  The Windows version was compiled with VS2012. To use the code, read the file readme.txt and follow the example provided there and in batch_calc_uBEN.m. You can still go to https://cfn.upenn.edu/zewang/BENtbx.php to download the sample data and matlab code. batch_calc_uBEN.m will read the code in par.m to find the data.
 If you meet any problem (especially for Mac machine), please let me know.
-I have provided a docker for calculating BEN. You can also provide an ev file to specify which timepoints should be included. This option is helpful for task fMRI if you want to calculate BEN for a specific condition only.
+I have provided a docker container for calculating BEN. You can also provide an ev file to specify which timepoints should be included. This option is helpful for task fMRI if you want to calculate BEN for a specific condition only.
 
 (In Chinese)
-BENtbx 可以在Linux, Windows, 和MacOS 下运行，请选择对应的版本。输入图像必须是nii 或者nii.gz格式，如果你需要支持cifti格式请单独联系，目前还没公开发布。如果出现“segmentation fault"错误很可能是图像有问题，可以先检查一下是否能打开该图像文件。另外输入的大脑模板(mask)必须跟输入图像的大小一致。
+BENtbx 可以在Linux, Windows, 和MacOS 下运行，请选择对应的版本。输入图像必须是nii 或者nii.gz格式，如果你需要支持cifti格式请单独联系，目前还没公开发布。如果出现“segmentation fault"错误很可能是图像有问题，可以先检查一下是否能打开该图像文件。另外输入的大脑模板(mask)必须跟输入图像的大小一致。下文提到的docker container可以在各大操作系统中运行，是跨平台数据处理的理想选择。container中的针对fMRI数据的BEN 计算程序在本目录中也可以找到。利用这个程序你可以指定计算哪些图像的熵。
 
 The following is copied from readme.txt.
 
