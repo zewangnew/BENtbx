@@ -5,6 +5,7 @@ This new version of BEN calculation code can directly read .nii or .nii.gz file.
 # -r cutoff. r can be set to be from 0.1 - 0.6. For long time series, a lower r can be used.
 # -num_dummies specifies how many dummy points will be removed from the beginning of the rsfMRI data
 # -m brainmask. Brain mask used for removing background voxels. This mask should have the same spatial size as that of the rsfMRI data.
+# -c  number of CPU cores to be used.
 # -i input image
 # -o output file. The filename will be patched to record some parameters.
 
@@ -22,3 +23,7 @@ ben -d 3 -r 0.6 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilenam
 # -num_dummies 19 -tlen_2use 10
 # the full command is:
 # ben -d 3 -4 0.6 -c 30 -num_dummies 19 -tlen_2use 10 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename.nii.gz
+
+# calculating BEN using part of the input images as specified by the ev file.
+# In the evfile, each colume will correspond to one BEN map. 1's in the columen label the timepoints to be used.
+ben_fmri -d 3 -r 0.6 -c 30 -m brainmask.nii.gz -ev evfile -i inputimage.nii.gz -o entropyfilename.nii.gz
