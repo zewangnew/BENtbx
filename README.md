@@ -5,7 +5,7 @@ If you meet any problem (especially for Mac machine), please let me know.
 I have provided a docker container for calculating BEN. You can also provide an ev file to specify which timepoints should be included. This option is helpful for task fMRI if you want to calculate BEN for a specific condition only.
 
 (In Chinese)
-BENtbx 可以在Linux, Windows, 和MacOS 下运行，请选择对应的版本。输入图像必须是nii 或者nii.gz格式，如果你需要支持cifti格式请单独联系，目前还没公开发布。如果出现“segmentation fault"错误很可能是图像有问题，可以先检查一下是否能打开该图像文件。另外输入的大脑模板(mask)必须跟输入图像的大小一致。下文提到的docker container可以在各大操作系统中运行，是跨平台数据处理的理想选择。container中的针对fMRI数据的BEN 计算程序在本目录中也可以找到。利用这个程序你可以指定计算哪些图像的熵。
+BENtbx 可以在Linux, Windows, 和MacOS 下运行，请选择对应的版本。输入图像必须是nii 或者nii.gz格式，如果你需要支持cifti格式请单独联系，相关程序还未正式发布。如果出现“segmentation fault"错误很可能是图像有问题，可以先检查一下是否能打开该图像文件，或者是输入参数有问题，比如d取的太大。另外输入的大脑模板(mask)必须跟输入图像的大小一致。下文提到的docker container可以在各大操作系统中运行，是跨平台数据处理的理想选择。container中的针对fMRI数据的BEN 计算程序在本目录中也可以找到。利用这个程序你可以指定计算哪些图像的熵。
 
 The following is copied from readme.txt.
 
