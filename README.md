@@ -32,11 +32,17 @@ ben_linux -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii
 benwin.exe -d 3 -r 0.6 -num_dummies 4 -c 30 -m brainmask.nii.gz -i inputimage.nii.gz -o entropyfilename
 
 ## instructions for using docker to run entropy calculation:
-# Instructions for running BENtbx using docker
+# Instructions for running BENtbx using docker.
+You should first make sure your user ID is in the group "docker". You can simply type: sudo usermod -a -G docker $USER to add your ID to that group. Most of time, you will need to reboot the computer (you can try the following command first before reboot. If it doesn't work, then reboot).
+
 Assuming data is saved in /home/yourname/workshop; data file is called sub_002_task.nii.gz. Using the following parameters: embedding window length w=3, cutoff threshold
 r=0.6 and output image name: bensub2.nii.gz, you can type the following command in linux or mac terminal to get the output.  Output will be saved in /home/yourname/workshop/output
 
 sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out ben_docker:1 /code/ben -d 3 -r 0.6 -i /data/sub_002_task.nii.gz -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
+## If the above command returned with error like "permission denied" etc. try the following:
+sudo docker run -it --rm -v $HOME/workshop:/data:ro -v $HOME/workshop/output:/out redhatwdoc/ben_docker:1 /code/ben -d 3 -r 0.6 -i /data/sub_002_task.nii.gz -m /data/imgmask.nii.gz -o /out/bensub2.nii.gz
+
 
 ## -it means interactive: you will see intermediate prompt message
 ## $HOME means /home/yourusername (yourusername will be automatically replaced by the real user name)
